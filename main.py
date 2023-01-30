@@ -9,9 +9,9 @@ class RPS:
         self.wins = 0
 
         self.win = Tk()
-        self.win.geometry('250x180')
-        size = 80, 80
+        self.win.geometry('250x200')
 
+        size = 80, 80
         rock_image = Image.open('rock.png')
         rock_image.thumbnail(size)
         rock_image = ImageTk.PhotoImage(rock_image)
@@ -42,41 +42,55 @@ class RPS:
         scissors = Button(self.win, text="Scissors", height=5, width=10, command=lambda: self.choice('scissors'))
         scissors.grid(column=2, row=1)
 
+        self.label_lives = Label(self.win, text=f'Lives: {self.lives}')
+        self.label_lives.grid(column=0, row=2)
+
+        self.label_wins = Label(self.win, text=f'Wins: {self.wins}')
+        self.label_wins.grid(column=1, row=2)
         self.win.mainloop()
 
     def choice(self, play_choice):
-        choices = ['rock', 'paper', 'scissors']
-        comp_choice = random.choice(choices)
-        print(f'{play_choice}')
-        print(f'{comp_choice}\n')
-        # print(comp_choice)
-        if comp_choice == play_choice:
-            print('Tie :^|')
-        # player winning
-        elif comp_choice == 'rock' and play_choice == 'paper':
-            self.wins += 1
-        elif comp_choice == 'paper' and play_choice == 'scissors':
-            self.wins += 1
-        elif comp_choice == 'scissors' and play_choice == 'rock':
-            self.wins += 1
+        try:
+            choices = ['rock', 'paper', 'scissors']
+            comp_choice = random.choice(choices)
+            print(f'{play_choice}')
+            print(f'{comp_choice}\n')
+            # print(comp_choice)
+            if comp_choice == play_choice:
+                print('Tie :^|')
+            # player winning
+            elif comp_choice == 'rock' and play_choice == 'paper':
+                self.wins += 1
+            elif comp_choice == 'paper' and play_choice == 'scissors':
+                self.wins += 1
+            elif comp_choice == 'scissors' and play_choice == 'rock':
+                self.wins += 1
 
-        # player lost
-        elif comp_choice == 'rock' and play_choice == 'scissors':
-            self.lives -= 1
-        elif comp_choice == 'paper' and play_choice == 'rock':
-            self.lives -= 1
-        elif comp_choice == 'scissors' and play_choice == 'paper':
-            self.lives -= 1
+            # player lost
+            elif comp_choice == 'rock' and play_choice == 'scissors':
+                self.lives -= 1
+            elif comp_choice == 'paper' and play_choice == 'rock':
+                self.lives -= 1
+            elif comp_choice == 'scissors' and play_choice == 'paper':
+                self.lives -= 1
 
-        if self.wins == 3:
-            print('winner')
-            self.win.destroy()
-        if self.lives == 0:
-            print('loser')
-            self.win.destroy()
+            if self.wins == 3:
+                print('winner')
+                self.win.destroy()
+            if self.lives == 0:
+                print('loser')
+                self.win.destroy()
 
-        print(f'lives: {self.lives}')
-        print(f'wins: {self.wins}\n')
+            self.label_lives.destroy()
+            self.label_wins.destroy()
+
+            self.label_lives = Label(self.win, text=f'Lives: {self.lives}')
+            self.label_lives.grid(column=0, row=2)
+
+            self.label_wins = Label(self.win, text=f'Wins: {self.wins}')
+            self.label_wins.grid(column=1, row=2)
+        except:
+            print(EXCEPTION)
 
 
 RPS()
